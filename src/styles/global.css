@@ -3,6 +3,8 @@
   --colors-white: #fdfdfd;
   --colors-gray: #a0a0a0;
   --colors-blue: #4788f5;
+  --border-radius: 8px;
+  --shadow: 18px 6px 45px #e3e3e3;
 }
 
 HTML {

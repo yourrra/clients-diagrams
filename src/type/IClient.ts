@@ -5,5 +5,5 @@ export interface IClient {
   fatherName: string
   numberPhone: string
   email: string
-  address: string
+  address?: string
 }
