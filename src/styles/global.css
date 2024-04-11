@@ -1,0 +1,22 @@
+:root {
+  --colors-dark: #141414;
+  --colors-white: #f9f7f3;
+}
+
+HTML {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+}
+
+BODY {
+  text-size-adjust: 100%;
+}
+
+FIELDSET {
+  all: unset;
+}
+
+#root {
+  height: 100%;
+}
