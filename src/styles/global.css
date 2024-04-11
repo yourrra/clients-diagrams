@@ -1,9 +1,12 @@
 :root {
   --colors-dark: #141414;
-  --colors-white: #f9f7f3;
+  --colors-white: #fdfdfd;
+  --colors-gray: #a0a0a0;
+  --colors-blue: #4788f5;
 }
 
 HTML {
+  color: var(--colors-dark);
   font-size: 16px;
   font-weight: 400;
   line-height: 26px;

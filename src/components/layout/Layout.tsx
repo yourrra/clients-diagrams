@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { useLocation, Link } from 'react-router-dom'
-import { Breadcrumb, Layout as AntdLayout, theme } from 'antd'
+import { Breadcrumb, Layout as AntdLayout } from 'antd'
 import { Header } from '../header'
 import { Footer } from '../footer'
 
@@ -9,15 +9,11 @@ type Props = {
 }
 
 export const Layout = ({ children }: Props) => {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken()
-
   const location = useLocation()
   // Разбиваем текущий URL на массив сегментов
   const pathSnippets = location.pathname.split('/').filter(i => i)
 
-  // Генерируем хлебные крошки на основе текущего URL
+  // Генерируем breadcrumbs на основе текущего URL
   const extraBreadcrumbItems = pathSnippets.map((_, index) => {
     const url = `/${pathSnippets.slice(0, index + 1).join('/')}`
     return (
@@ -39,16 +35,8 @@ export const Layout = ({ children }: Props) => {
       <Header />
       <AntdLayout.Content style={{ padding: '0 48px' }}>
         <Breadcrumb style={{ margin: '16px 0' }}>{breadcrumbs}</Breadcrumb>
-        <div
-          style={{
-            background: colorBgContainer,
-            minHeight: 280,
-            padding: 24,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          {children}
-        </div>
+
+        {children}
       </AntdLayout.Content>
       <Footer />
     </AntdLayout>

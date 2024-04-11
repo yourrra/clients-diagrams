@@ -1,0 +1,17 @@
+.Wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 25px;
+  border-radius: 8px;
+  background-color: var(--colors-white);
+  box-shadow: 18px 6px 45px #e3e3e3;
+  gap: 10px;
+}
+
+.Title {
+  font-weight: 500;
+}
+
+.Description {
+  color: var(--colors-gray);
+}
