@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
     element: <AddEditClient />,
   },
   {
-    path: ROUTES.CLIENTS_EDIT,
+    path: ROUTES.CLIENTS_EDIT(),
     element: <AddEditClient />,
   },
   {
@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
     element: <AddEditDiagram />,
   },
   {
-    path: ROUTES.DIAGRAMS_EDIT,
+    path: ROUTES.DIAGRAMS_EDIT(),
     element: <AddEditDiagram />,
   },
 ])

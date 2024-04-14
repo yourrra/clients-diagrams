@@ -3,23 +3,27 @@ import { Link } from '../../components/link'
 import { Table, Button, Modal, message } from 'antd'
 import type { TableColumnsType } from 'antd'
 import { observer } from 'mobx-react-lite'
-import clientStore from '../../stores/ClientStore'
+import ClientStore from '../../stores/ClientStore'
 import { useState } from 'react'
+import { CLIENTS_EDIT, ROUTES } from '../../constants/urls'
+import { IClient } from '../../type/IClient'
 
 import styles from './Clients.module.css'
-import { ROUTES } from '../../constants/urls'
 
-interface DataType {
-  key: React.Key
-  firstName: string
-  lastName: string
-  middleName: string
-}
+type DataType = Omit<
+  IClient,
+  keyof { phone: string; email: string; address?: string }
+> & { key: React.Key }
 
 const columns: TableColumnsType<DataType> = [
   {
     title: 'Фамилия',
     dataIndex: 'lastName',
+    render: (text, record) => (
+      <Link type="link" props={{ to: ROUTES.CLIENTS_EDIT(record.id) }}>
+        {text}
+      </Link>
+    ),
   },
   {
     title: 'Имя',
@@ -32,15 +36,13 @@ const columns: TableColumnsType<DataType> = [
 ]
 
 export const Clients = observer(() => {
-  const { clients, removeClient } = clientStore
+  const { clients, removeClient } = ClientStore
 
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
-  const [loading, setLoading] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
 
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys)
-    setSelectedRowKeys(newSelectedRowKeys)
+  const onSelectChange = (selectedRowKeys: React.Key[]) => {
+    setSelectedRowKeys(selectedRowKeys)
   }
 
   const handleDelete = () => {
@@ -52,7 +54,7 @@ export const Clients = observer(() => {
   }
 
   const handleOk = () => {
-    removeClient(selectedRowKeys[0].toString()) // Удаляем только первого выбранного клиента
+    removeClient(selectedRowKeys)
     setIsModalVisible(false)
     setSelectedRowKeys([])
     message.success('Клиент удален')
@@ -66,22 +68,21 @@ export const Clients = observer(() => {
     selectedRowKeys,
     onChange: onSelectChange,
   }
+
   const hasSelected = selectedRowKeys.length > 0
 
   return (
     <Layout>
       <div className={styles.Wrapper}>
-        <Button type="primary">
-          <Link type="link" props={{ to: ROUTES.CLIENTS_CREATE }}>
-            Добавить
-          </Link>
-        </Button>
+        <div>
+          <Button type="primary">
+            <Link type="link" props={{ to: ROUTES.CLIENTS_CREATE }}>
+              Добавить
+            </Link>
+          </Button>
+        </div>
         <div className={styles.SelectedElem}>
-          <span>
-            {hasSelected
-              ? `Выбранных элементов: ${selectedRowKeys.length} `
-              : ''}
-          </span>
+          {`Выбранных элементов: ${selectedRowKeys.length}`}
           <Button
             type="primary"
             onClick={handleDelete}
@@ -94,18 +95,20 @@ export const Clients = observer(() => {
         <Table
           rowSelection={rowSelection}
           columns={columns}
-          dataSource={clients}
-          pagination={false}
+          dataSource={clients.map(client => ({
+            ...client,
+            key: client.id,
+          }))}
         />
         <Modal
           title="Подтвердите удаление"
-          visible={isModalVisible}
+          open={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
           okText="Удалить"
           cancelText="Отмена"
         >
-          <p>Вы уверены, что хотите удалить этого клиента?</p>
+          <p>Вы уверены, что хотите удалить выбранного клиента?</p>
         </Modal>
       </div>
     </Layout>

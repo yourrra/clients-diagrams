@@ -6,31 +6,36 @@ class ClientStore {
 
   constructor() {
     makeAutoObservable(this)
+    this.clients = []
     this.loadClients()
   }
 
-  loadClients() {
+  loadClients = () => {
     const savedClients = localStorage.getItem('clients')
     if (savedClients) {
       this.clients = JSON.parse(savedClients)
     }
   }
 
-  saveClients() {
+  saveClients = () => {
     localStorage.setItem('clients', JSON.stringify(this.clients))
   }
 
-  addClient(client: IClient) {
+  addClient = (client: IClient) => {
     this.clients.push(client)
     this.saveClients()
   }
 
-  removeClient(id: string) {
-    this.clients = this.clients.filter(client => client.id !== id)
-    this.saveClients()
+  removeClient = (ids: React.Key[]) => {
+    if (this.clients) {
+      this.clients = this.clients.filter(client => !ids.includes(client.id))
+      this.saveClients()
+    } else {
+      console.error('Clients array is undefined')
+    }
   }
 
-  editClient(updatedClient: IClient) {
+  editClient = (updatedClient: IClient) => {
     const index = this.clients.findIndex(
       client => client.id === updatedClient.id,
     )
