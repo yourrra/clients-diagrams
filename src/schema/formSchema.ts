@@ -8,7 +8,7 @@ export const formSchema = z.object({
     })
     .min(2, { message: 'Имя пользователя слишком короткое' })
     .max(20, { message: 'Имя пользователя слишком длинное' })
-    .regex(/^[A-Za-zА-Яа-я]/g, {
+    .regex(/^([^0-9]*)$/g, {
       message: 'Поле должно содержать только буквы',
     }),
   lastName: z
@@ -18,7 +18,7 @@ export const formSchema = z.object({
     })
     .min(2, { message: 'Фамилия пользователя слишком короткая' })
     .max(20, { message: 'Фамилия пользователя слишком длинная' })
-    .regex(/^[A-Za-zА-Яа-я]/g, {
+    .regex(/^([^0-9]*)$/g, {
       message: 'Поле должно содержать только буквы',
     }),
   fatherName: z
@@ -28,7 +28,7 @@ export const formSchema = z.object({
     })
     .min(2, { message: 'Отчество пользователя слишком короткое' })
     .max(20, { message: 'Отчество пользователя слишком длинное' })
-    .regex(/^[A-Za-zА-Яа-я]/g, {
+    .regex(/^([^0-9]*)$/g, {
       message: 'Поле должно содержать только буквы',
     }),
   email: z
