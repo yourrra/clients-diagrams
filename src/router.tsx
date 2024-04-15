@@ -4,8 +4,9 @@ import { Main } from './pages/main'
 import { NotFound } from './pages/notFound'
 import { Clients } from './pages/clients'
 import { Diagrams } from './pages/diagrams'
-import { AddEditDiagram } from './pages/addEditDiagram'
+import { AddDiagram } from './pages/addDiagram'
 import { AddEditClient } from './pages/addEditClient'
+import { EditDiagram } from './pages/editDiagram'
 
 export const router = createBrowserRouter([
   {
@@ -31,10 +32,10 @@ export const router = createBrowserRouter([
   },
   {
     path: ROUTES.DIAGRAMS_CREATE,
-    element: <AddEditDiagram />,
+    element: <AddDiagram />,
   },
   {
     path: ROUTES.DIAGRAMS_EDIT(),
-    element: <AddEditDiagram />,
+    element: <EditDiagram />,
   },
 ])

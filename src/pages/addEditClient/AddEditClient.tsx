@@ -1,18 +1,21 @@
 import { useParams } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
 import { Layout } from '../../components/layout'
-import { IClient } from '../../type/IClient'
+import { TClient } from '../../type/TClient'
 import { AddEditForm } from './compponents/AddEditForm'
-import ClientStore from '../../stores/ClientStore'
 import { v4 as uuidv4 } from 'uuid'
+import { FormData } from '../../type/TClient'
+import { useCallback } from 'react'
+import ClientStore from '../../stores/ClientStore'
 
-export const AddEditClient = () => {
+export const AddEditClient = observer(() => {
   const { id } = useParams<{ id?: string }>()
 
   const client = id
-    ? ClientStore.clients.find((c: IClient) => c.id === id)
+    ? ClientStore.clients.find((c: TClient) => c.id === id)
     : null
 
-  const handleSubmit = data => {
+  const handleSubmit = useCallback((data: FormData) => {
     if (id) {
       // Редактирование клиента
       ClientStore.editClient({ ...data, id })
@@ -21,7 +24,7 @@ export const AddEditClient = () => {
       const newId = uuidv4()
       ClientStore.addClient({ ...data, id: newId })
     }
-  }
+  }, [])
 
   return (
     <Layout>
@@ -31,4 +34,4 @@ export const AddEditClient = () => {
       </div>
     </Layout>
   )
-}
+})

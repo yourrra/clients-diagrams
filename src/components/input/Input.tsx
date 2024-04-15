@@ -1,6 +1,6 @@
-import { Input as AntdInput, Form } from 'antd'
+import { Input as AntdInput } from 'antd'
 import { FormItem } from 'react-hook-form-antd'
-import { Control, FieldValues, Path } from 'react-hook-form'
+import { Control } from 'react-hook-form'
 import { InputHTMLAttributes } from 'react'
 
 type Props = {

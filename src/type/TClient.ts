@@ -1,4 +1,4 @@
-export interface IClient {
+export type TClient = {
   id: string
   firstName: string
   lastName: string
@@ -7,3 +7,5 @@ export interface IClient {
   email: string
   address?: string
 }
+
+export type FormData = Omit<TClient, 'id'>

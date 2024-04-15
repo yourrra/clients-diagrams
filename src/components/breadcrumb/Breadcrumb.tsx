@@ -11,20 +11,20 @@ export const Breadcrumb = () => {
   const capatilize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
   const breadcrumbs = pathnames.map((name, index) => {
-    // Пропускаем отображение идентификатора клиента в Breadcrumb
     if (name === 'edit' && id) return null
 
     const routeTo = `/${pathnames.slice(0, index + 1).join('/')}`
     const isLast = index === pathnames.length - 1
 
-    // Модифицируем название для 'clients' и 'edit'
     if (name === 'clients') name = 'Клиенты'
     if (name === 'diagrams') name = 'Диаграммы'
+    if (routeTo === '/clients/create') name = 'Добавить клиента'
+    if (routeTo === '/diagrams/create') name = 'Добавить диаграмму'
     if (name === id) name = 'Редактирование клиента'
+    if (routeTo === `/diagrams/edit/${id}`) name = 'Редактирование диаграммы'
 
     return (
       <AntdBreadcrumb.Item key={index}>
-        {/* Добавляем ссылку, если это не последний сегмент */}
         {isLast ? (
           capatilize(name)
         ) : (

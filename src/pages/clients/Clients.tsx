@@ -5,13 +5,13 @@ import type { TableColumnsType } from 'antd'
 import { observer } from 'mobx-react-lite'
 import ClientStore from '../../stores/ClientStore'
 import { useState } from 'react'
-import { CLIENTS_EDIT, ROUTES } from '../../constants/urls'
-import { IClient } from '../../type/IClient'
+import { ROUTES } from '../../constants/urls'
+import { TClient } from '../../type/TClient'
 
 import styles from './Clients.module.css'
 
 type DataType = Omit<
-  IClient,
+  TClient,
   keyof { phone: string; email: string; address?: string }
 > & { key: React.Key }
 

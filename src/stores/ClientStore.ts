@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
-import { IClient } from '../type/IClient'
+import { TClient } from '../type/TClient'
 
 class ClientStore {
-  clients: IClient[] = []
+  clients: TClient[] = []
 
   constructor() {
     makeAutoObservable(this)
@@ -21,7 +21,7 @@ class ClientStore {
     localStorage.setItem('clients', JSON.stringify(this.clients))
   }
 
-  addClient = (client: IClient) => {
+  addClient = (client: TClient) => {
     this.clients.push(client)
     this.saveClients()
   }
@@ -35,7 +35,7 @@ class ClientStore {
     }
   }
 
-  editClient = (updatedClient: IClient) => {
+  editClient = (updatedClient: TClient) => {
     const index = this.clients.findIndex(
       client => client.id === updatedClient.id,
     )
