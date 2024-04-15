@@ -97,7 +97,7 @@ export const AddEditForm = ({ onSubmit, defaultValues }: Props) => {
         errors={errors}
         name="phone"
         control={control}
-        placeholder="Введите телефон"
+        placeholder="8ХХХХХХХХХХ"
       />
       <Input
         label="Эл. почта"

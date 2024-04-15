@@ -42,6 +42,6 @@ export const formSchema = z.object({
       required_error: 'Поле обязательно',
       invalid_type_error: 'Name must be a string',
     })
-    .regex(/^\d{11}$/, { message: 'Некорректный номер телефона' }),
+    .regex(/^8\d{10}$/, { message: 'Некорректный номер телефона' }),
   address: z.string().optional(),
 })
