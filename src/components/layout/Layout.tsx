@@ -22,10 +22,3 @@ export const Layout = ({ children }: Props) => {
     </AntdLayout>
   )
 }
-
-{
-  /* <AntdLayout.Content style={{ padding: '0 48px' }}>
-<Breadcrumb />
-{children}
-</AntdLayout.Content> */
-}

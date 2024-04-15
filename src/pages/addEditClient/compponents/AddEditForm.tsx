@@ -8,9 +8,11 @@ import { ROUTES } from '../../../constants/urls'
 import { useEffect, useState } from 'react'
 import { FormData } from '../../../type/TClient'
 
+import styles from './AddEditForm.module.css'
+
 interface Props {
   onSubmit: (data: FormData) => void
-  defaultValues?: FormData
+  defaultValues?: FormData | null
 }
 
 export const AddEditForm = ({ onSubmit, defaultValues }: Props) => {
@@ -113,18 +115,20 @@ export const AddEditForm = ({ onSubmit, defaultValues }: Props) => {
         control={control}
         placeholder="Введите адрес"
       />
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Создать
-        </Button>
-        <Button
-          type="default"
-          onClick={handleResetForm}
-          style={{ marginLeft: '8px' }}
-        >
-          Сбросить
-        </Button>
-      </Form.Item>
+      <div className={styles.Buttons}>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            {defaultValues ? 'Изменить' : 'Добавить'}
+          </Button>
+          <Button
+            type="default"
+            onClick={handleResetForm}
+            style={{ marginLeft: '8px' }}
+          >
+            Сбросить
+          </Button>
+        </Form.Item>
+      </div>
     </Form>
   )
 }

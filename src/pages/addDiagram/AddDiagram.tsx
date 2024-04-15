@@ -10,8 +10,9 @@ import { useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { diagramSchema } from '../../schema/diagramSchema'
 import { TDiagram } from '../../type/TDiagram'
-
 import DiagramStore from '../../stores/DiagramStore'
+
+import styles from './AddDiagrams.module.css'
 
 type DiagramForm = Omit<TDiagram, 'id' | 'nodes'>
 
@@ -33,7 +34,7 @@ export const AddDiagram = observer(() => {
     setFocus('name')
   }, [setFocus])
 
-  const createDiagram = async (name: string) => {
+  const createDiagram = (name: string) => {
     const newDiagram = {
       id: uuidv4(),
       name: name,
@@ -41,7 +42,7 @@ export const AddDiagram = observer(() => {
         {
           id: '1',
           type: 'custom',
-          data: { label: 'Block 1' },
+          data: { id: '1', label: 'Block 1' },
           position: { x: 0, y: 0 },
         },
       ],
@@ -66,8 +67,9 @@ export const AddDiagram = observer(() => {
 
   return (
     <Layout>
-      <div>
+      <div className={styles.Wrapper}>
         <h1>{'Добавить диаграмму'}</h1>
+        <hr />
         <Form layout="vertical" onFinish={handleSubmit(handleFormSubmit)}>
           <Input
             label="Название диаграммы"

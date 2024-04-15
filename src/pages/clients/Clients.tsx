@@ -3,10 +3,10 @@ import { Link } from '../../components/link'
 import { Table, Button, Modal, message } from 'antd'
 import type { TableColumnsType } from 'antd'
 import { observer } from 'mobx-react-lite'
-import ClientStore from '../../stores/ClientStore'
 import { useState } from 'react'
 import { ROUTES } from '../../constants/urls'
 import { TClient } from '../../type/TClient'
+import ClientStore from '../../stores/ClientStore'
 
 import styles from './Clients.module.css'
 
@@ -74,9 +74,12 @@ export const Clients = observer(() => {
   return (
     <Layout>
       <div className={styles.Wrapper}>
-        <div>
+        <div className={styles.ButtonAdd}>
           <Button type="primary">
-            <Link type="link" props={{ to: ROUTES.CLIENTS_CREATE }}>
+            <Link
+              type="link"
+              props={{ to: ROUTES.CLIENTS_CREATE, style: { color: 'white' } }}
+            >
               Добавить
             </Link>
           </Button>

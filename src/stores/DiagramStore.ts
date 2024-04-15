@@ -1,14 +1,9 @@
 import { makeAutoObservable } from 'mobx'
 import {
   Connection,
-  Edge,
-  EdgeChange,
-  Node,
   NodeChange,
+  EdgeChange,
   addEdge,
-  OnNodesChange,
-  OnEdgesChange,
-  OnConnect,
   applyNodeChanges,
   applyEdgeChanges,
 } from 'reactflow'
@@ -24,14 +19,22 @@ class DiagramStore {
   }
 
   loadDiagrams = () => {
-    const savedDiagrams = localStorage.getItem('diagrams')
-    if (savedDiagrams) {
-      this.diagrams = JSON.parse(savedDiagrams)
+    try {
+      const savedDiagrams = localStorage.getItem('diagrams')
+      if (savedDiagrams) {
+        this.diagrams = JSON.parse(savedDiagrams)
+      }
+    } catch (error) {
+      console.error('Не удалось загрузить диаграммы:', error)
     }
   }
 
   saveDiagrams = () => {
-    localStorage.setItem('diagrams', JSON.stringify(this.diagrams))
+    try {
+      localStorage.setItem('diagrams', JSON.stringify(this.diagrams))
+    } catch (error) {
+      console.error('Не удалось сохранить диаграммы:', error)
+    }
   }
 
   addDiagram = (diagram: TDiagram) => {
@@ -98,11 +101,11 @@ class DiagramStore {
     }
   }
 
-  getDiagramById = (id: string) => {
+  getDiagramById = (id: string): TDiagram | undefined => {
     return this.diagrams.find(diagram => diagram.id === id)
   }
 
-  onNodesChange = (changes: Node[]) => {
+  onNodesChange = (changes: NodeChange[]) => {
     this.diagrams = this.diagrams.map(diagram => {
       return {
         ...diagram,
@@ -112,7 +115,7 @@ class DiagramStore {
     this.saveDiagrams()
   }
 
-  onEdgesChange = (changes: Edge[]) => {
+  onEdgesChange = (changes: EdgeChange[]) => {
     this.diagrams = this.diagrams.map(diagram => {
       return {
         ...diagram,
@@ -123,10 +126,14 @@ class DiagramStore {
   }
 
   onConnect = (connection: Connection) => {
-    const diagram = this.getDiagramById(connection.source)
-    if (diagram) {
-      diagram.edges = addEdge(connection, diagram.edges || [])
-      this.saveDiagrams()
+    if (connection.source !== null) {
+      const diagram = this.getDiagramById(connection.source)
+      if (diagram) {
+        diagram.edges = addEdge(connection, diagram.edges || [])
+        this.saveDiagrams()
+      }
+    } else {
+      console.log('Не удалось соединить ноды')
     }
   }
 }

@@ -11,14 +11,23 @@ class ClientStore {
   }
 
   loadClients = () => {
-    const savedClients = localStorage.getItem('clients')
-    if (savedClients) {
-      this.clients = JSON.parse(savedClients)
+    try {
+      const savedClients = localStorage.getItem('clients')
+      if (savedClients) {
+        this.clients = JSON.parse(savedClients)
+      }
+    } catch (error) {
+      console.error('Не удалось загрузить клиентов:', error)
+      return []
     }
   }
 
   saveClients = () => {
-    localStorage.setItem('clients', JSON.stringify(this.clients))
+    try {
+      localStorage.setItem('clients', JSON.stringify(this.clients))
+    } catch (error) {
+      console.error('Не удалось сохранить клиента:', error)
+    }
   }
 
   addClient = (client: TClient) => {
@@ -31,7 +40,7 @@ class ClientStore {
       this.clients = this.clients.filter(client => !ids.includes(client.id))
       this.saveClients()
     } else {
-      console.error('Clients array is undefined')
+      console.error('Клиент не определен')
     }
   }
 

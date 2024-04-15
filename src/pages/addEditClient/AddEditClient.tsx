@@ -8,6 +8,8 @@ import { FormData } from '../../type/TClient'
 import { useCallback } from 'react'
 import ClientStore from '../../stores/ClientStore'
 
+import styles from './AddEditClient.module.css'
+
 export const AddEditClient = observer(() => {
   const { id } = useParams<{ id?: string }>()
 
@@ -17,10 +19,8 @@ export const AddEditClient = observer(() => {
 
   const handleSubmit = useCallback((data: FormData) => {
     if (id) {
-      // Редактирование клиента
       ClientStore.editClient({ ...data, id })
     } else {
-      // Добавление клиента
       const newId = uuidv4()
       ClientStore.addClient({ ...data, id: newId })
     }
@@ -28,8 +28,9 @@ export const AddEditClient = observer(() => {
 
   return (
     <Layout>
-      <div>
+      <div className={styles.Wrapper}>
         <h1>{id ? 'Редактирование клиента' : 'Добавление клиента'}</h1>
+        <hr />
         <AddEditForm onSubmit={handleSubmit} defaultValues={client} />
       </div>
     </Layout>

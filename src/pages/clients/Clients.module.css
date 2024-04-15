@@ -13,3 +13,8 @@
   background-color: var(--colors-white);
   box-shadow: var(--shadow);
 }
+
+.ButtonAdd {
+  display: flex;
+  justify-content: end;
+}

@@ -18,11 +18,9 @@ type Props = {
   isConnectable?: boolean
 }
 
-type NodeForm = Omit<Data, 'id'>
-
 export const CustomNode = observer(({ data, isConnectable = true }: Props) => {
   const { id } = useParams<{ id?: string }>()
-  const diagram = DiagramStore.getDiagramById(id)
+  const diagram = id ? DiagramStore.getDiagramById(id) : null
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [formData, setFormData] = useState<Data>(
     { id: data.id, label: data.label } || {},
@@ -45,10 +43,10 @@ export const CustomNode = observer(({ data, isConnectable = true }: Props) => {
 
   const handleAddNode = () => {
     const newNodeId =
-      Math.max(...diagram.nodes.map(node => parseInt(node.id))) + 1
+      Math.max(...(diagram?.nodes.map(node => parseInt(node.id)) || [])) + 1
     const newEdgeId =
-      Math.max(...diagram?.edges.map(edge => parseInt(edge.id))) + 1
-    const positionY = diagram?.nodes[diagram.nodes.length - 1].position.y
+      Math.max(...(diagram?.edges.map(edge => parseInt(edge.id)) || [])) + 1
+    const positionY = diagram?.nodes[diagram.nodes.length - 1]?.position.y || 0
 
     const newNode = {
       id: newNodeId.toString(),
@@ -64,8 +62,12 @@ export const CustomNode = observer(({ data, isConnectable = true }: Props) => {
       source: newEdgeId.toString(),
       target: (newNodeId + 1).toString(),
     }
-    DiagramStore.addEdge(id, newEdge)
-    DiagramStore.addNode(id, newNode)
+    if (id) {
+      DiagramStore.addEdge(id, newEdge)
+      DiagramStore.addNode(id, newNode)
+    } else {
+      message.error('Не удалось выполнить операцию: диаграмма не найдена')
+    }
 
     DiagramStore.onEdgesChange([newEdge])
     message.success('Нода добавлена')
@@ -76,16 +78,28 @@ export const CustomNode = observer(({ data, isConnectable = true }: Props) => {
   }
 
   const handleDeleteNode = (nodeId: string) => {
-    DiagramStore.deleteNode(id, nodeId)
-    message.success('Нода удалена')
+    if (id) {
+      try {
+        DiagramStore.deleteNode(id, nodeId)
+        message.success('Нода удалена')
+      } catch (error) {
+        message.error('Произошла ошибка при удалении ноды')
+      }
+    } else {
+      message.error('Не удалось выполнить операцию: диаграмма не найдена')
+    }
   }
 
   const handleFormSubmit = (data: Data) => {
-    try {
-      DiagramStore.editNode(id, data.id, data.label)
-      setIsModalVisible(false)
-    } catch (error) {
-      message.error('Произошла ошибка при редактировании ноды')
+    if (id) {
+      try {
+        DiagramStore.editNode(id, data.id, data.label)
+        setIsModalVisible(false)
+      } catch (error) {
+        message.error('Произошла ошибка при редактировании ноды')
+      }
+    } else {
+      message.error('Не удалось выполнить операцию: диаграмма не найдена')
     }
   }
 
@@ -99,8 +113,6 @@ export const CustomNode = observer(({ data, isConnectable = true }: Props) => {
   const handleCancel = () => {
     setIsModalVisible(false)
   }
-
-  // console.log(formData)
 
   return (
     <div className={styles.Wrapper}>

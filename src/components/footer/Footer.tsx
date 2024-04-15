@@ -3,7 +3,7 @@ import { Layout as AntdLayout } from 'antd'
 export const Footer = () => {
   return (
     <AntdLayout.Footer style={{ textAlign: 'center' }}>
-      Ant Design ©{new Date().getFullYear()} Created by Ant UED
+      Тестовое задание ©{new Date().getFullYear()} Created by @yoour_raa
     </AntdLayout.Footer>
   )
 }

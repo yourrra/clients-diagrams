@@ -59,9 +59,12 @@ export const Diagrams = observer(() => {
   return (
     <Layout>
       <div className={styles.Wrapper}>
-        <div>
+        <div className={styles.ButtonAdd}>
           <Button type="primary">
-            <Link type="link" props={{ to: ROUTES.DIAGRAMS_CREATE }}>
+            <Link
+              type="link"
+              props={{ to: ROUTES.DIAGRAMS_CREATE, style: { color: 'white' } }}
+            >
               Добавить
             </Link>
           </Button>
