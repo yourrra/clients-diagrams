@@ -1,27 +1,56 @@
-# React + TypeScript + Vite
+# Тестовое задание
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Установка и запуск приложения:
 
-Currently, two official plugins are available:
+#### Dev-режим
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```bash
+npm ci && npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+#### Prod-режим
+
+```bash
+npm ci && npm run build
+```
+
+#### Главная страница
+
+#### path: '/'
+
+С данной страницы вы можете перейти к страницы с таблицами клиентов или диаграмм
+
+![Главная страница](./.github/MainPage.png)
+
+#### Таблица клиентов
+
+#### path: '/clients'
+
+На этой странице отображаются все пользователи, также можно создать нового клиента или удалить его
+
+![Таблица клиентов](./.github/TableClient.png)
+
+#### Страница добавления/изменения нового клиента
+
+#### path: '/clients/create' or '/clients/edit/:id'
+
+На этой странице представлено несколько полей для ввода, каждое поле проходит валидацию, у каждого поля есть несколько правил для проверки пользовательского ввода
+
+![Страница добавления нового клиента](./.github/FormEditAddClient.png)
+
+#### Таблица диаграмм
+
+#### path: '/diagrams
+
+На этой странице отображаются все диаграммы, также можно создать новую диаграмму или удалить ее
+
+![Страница добавления нового клиента](./.github/TableDiagram.png)
+
+#### Таблица диаграмм
+
+#### path: '/diagrams/edit/:id'
+
+На этой странице отображается диаграмма, состоящая из нод, ноду можно удалить, изменить или добавить новую. Если у ноды несколько потомков, то при удалении они тоже будут удалены
+
+![Страница добавления нового клиента](./.github/EditDiagram.png)
+x
