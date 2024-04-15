@@ -11,7 +11,7 @@ const nodeTypes = { custom: CustomNode }
 
 export const EditDiagram = observer(() => {
   const { id } = useParams<{ id?: string }>()
-  const diagram = DiagramStore.getDiagramById(id)
+  const diagram = id ? DiagramStore.getDiagramById(id) : null
 
   return (
     <Layout>
